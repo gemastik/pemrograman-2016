@@ -62,6 +62,20 @@ protected:
             "kwek 2 6",
             "kwok 5 8"
         });
+
+        SAMPLE_CASE({"11",
+            "charlie 11 60",
+            "eko 70 32",
+            "fauzan 101 101",
+            "victor 99 103",
+            "halim 103 10",
+            "mona 16 100",
+            "ridho 20 64",
+            "sherly 54 85",
+            "ahmad 100 3",
+            "bambang 40 23",
+            "wawan 74 19"
+        });
     }
     
     void TestCases() {
@@ -81,10 +95,17 @@ protected:
     }  
 
     private:
+        string get_string(int x){
+            string res = to_string(x);
+            for (int i=0;i<res.size();i++)
+                res[i] += 'a' - '0';
+            return res;
+        }
+
         void randomNames() {
             I.clear();
             for (int i=0;i<N;i++){
-                I.push_back(to_string(i));
+                I.push_back(get_string(i));
             }
             sort(I.begin(), I.end());
         }
