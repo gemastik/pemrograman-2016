@@ -47,13 +47,13 @@ protected:
     void SampleTestCases() {
         SAMPLE_CASE({"3","1 2 3","5 4 6","9 8 7"});
         SAMPLE_CASE({"1","6 6 6"});
-        SAMPLE_CASE({"2","1 1 1","10 20 30"});   
+        SAMPLE_CASE({"2","1 1 1","10 20 30"});
     }
-    
+
     void TestCases() {
        for (int i=0;i<10;i++) CASE(N = rnd.nextInt(90,100), randomNumbers(A, 1,30),randomNumbers(B, 1,30),randomNumbers(C, 1,30));
        for (int i=0;i<10;i++) CASE(N = rnd.nextInt(90,100),randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
-    }  
+    }
 
     private:
         void randomNumbers(vector<int>& v, int minElem, int maxElem){

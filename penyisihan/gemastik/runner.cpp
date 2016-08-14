@@ -77,7 +77,7 @@ protected:
             "wawan 74 19"
         });
     }
-    
+
     void TestCases() {
        CASE(N = 10, randomNames() , G = {5,5,5,6,6,6,1,1,1,3} , C = {5,5,5,1,1,1,6,6,6,3});
        CASE(N = 10, randomNames(), G = {10,10,10,1,1,1,3,4,2,2} , C = {9,9,9,8,8,8,5,4,2,1} );
@@ -92,7 +92,7 @@ protected:
        for (int i=0;i<5;i++) CASE(N = 48999, randomNames() , randomNumbers(G, 1,100), randomNumbers(C, 1,100));
        for (int i=0;i<6;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,1000), randomNumbers(C, 1,1000));
 
-    }  
+    }
 
     private:
         string get_string(int x){
