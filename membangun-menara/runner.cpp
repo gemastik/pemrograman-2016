@@ -8,7 +8,7 @@ class Problem : public BaseProblem {
 protected:
     int N, K, T;
     vector<int> A,B,C;
-    int X;
+    int H_MIN, H_MAX;
     void Config() {
         setSlug("menara");
         setTimeLimit(3);
@@ -22,11 +22,11 @@ protected:
     }
 
     void OutputFormat() {
-        LINE(X);
+        LINE(H_MIN, H_MAX);
     }
 
     void Constraints() {
-        CONS(1 <= N && N <= 50000);
+        CONS(1 <= N && N <= 100);
         CONS(eachElementBetween(A,1,1000));
         CONS(eachElementBetween(B,1,1000));
         CONS(eachElementBetween(C,1,1000));
@@ -45,22 +45,14 @@ private:
 class Generator : public BaseGenerator<Problem> {
 protected:
     void SampleTestCases() {
-        SAMPLE_CASE({"2",
-                    "1 1 3", "2 3 1"
-        });
-
-        SAMPLE_CASE({"5",
-            "12 19 9",
-            "10 11 13",
-            "9 8 7",
-            "5 5 5",
-            "100 98 101"
-        });
+        SAMPLE_CASE({"3","1 2 3","5 4 6","9 8 7"});
+        SAMPLE_CASE({"1","6 6 6"});
+        SAMPLE_CASE({"2","1 1 1","10 20 30"});   
     }
     
     void TestCases() {
-       for (int i=0;i<10;i++) CASE(N = 40002, randomNumbers(A, 1,30),randomNumbers(B, 1,30),randomNumbers(C, 1,30));
-       for (int i=0;i<10;i++) CASE(N = 50000, randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
+       for (int i=0;i<10;i++) CASE(N = rnd.nextInt(90,100), randomNumbers(A, 1,30),randomNumbers(B, 1,30),randomNumbers(C, 1,30));
+       for (int i=0;i<10;i++) CASE(N = rnd.nextInt(90,100),randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
     }  
 
     private:
