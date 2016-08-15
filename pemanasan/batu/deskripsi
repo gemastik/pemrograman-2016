@@ -1,0 +1,36 @@
+Lorong Batu
+
+Saat melakukan ekspedisi ke gua terpencil, Pak Chanek menemukan sebuah lorong yang penuh dengan batu permata misterius. Lorong tersebut direpresentasikan menjadi sebuah tabel berukuran 2 baris dan N kolom. Setiap sel di dalam tabel itu bisa kosong, atau berisi sebuah batu permata.
+Pak Chanek ingin membawa semua batu permata itu untuk diteliti lebih jauh. Oleh karena itu dia ingin mengambil semua batu permata itu dengan sejumlah operasi. Operasi yang bisa dilakukan Pak Chanek:
+Ambil batu permata di sebuah sel.
+Ambil batu permata di dua buah sel yang bertetanggaan.
+Dua buah sel dikatakan bertetangga apabila di dalam tabel, kedua sel itu bersebelahan secara vertikal, horizontal, atau diagonal.
+Waktu Pak Chanek terbatas, karena dia harus pulang sebelum matahari terbenam. Bantulah Pak Chanek menentukan berapa banyak operasi minimal yang perlu dia lakukan untuk mengambil semua batu itu!
+
+FM
+Baris pertama berisi sebuah bilangan bulat T, yang menyatakan banyaknya kasus.
+Setiap kasus diawali dengan sebuah bilangan bulat, N. Dua baris berikutnya berisi N karakter yang hanya terdiri atas '0' atau '1'. Kedua baris ini merepresentasikan keadaan lorong tersebut, dengan '1' menyatakan berisi permata, dan '0' menyatakan kosong.
+
+FK
+Untuk setiap kasus, cetak sebuah bilangan yang menyatakan berapa banyak operasi minimal yang perlu dia lakukan untuk mengambil semua batu itu.
+
+CM
+2
+5
+10100
+01010
+4
+1100
+0001
+
+CK
+2
+2
+
+PJ
+Untuk kasus pertama, ambil batu di sel baris 1 kolom 1 dan baris 2 kolom 2 sekaligus, lalu ambil batu di sel baris 1 kolom 3 dan baris 2 kolom 4 sekaligus.
+Untuk kasus kedua, ambil batu di sel baris 1 kolom 1 dan baris 1 kolom 2 sekaligus, lalu ambil batu di sel baris 2 kolom 4.
+
+BT
+1 <= T <= 1000
+1 <= N <= 1000
