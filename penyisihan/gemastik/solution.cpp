@@ -3,7 +3,7 @@ using namespace std;
 
 int f_gemas[500001], f_cantik[500001], v[12];
 pair<int,int> gemas[50001], cantik[50001];
-char nama[50001][8];
+char nama[50001][10];
 int best;
 int a,b,c,d,e,f;
 
@@ -43,8 +43,8 @@ int main() {
                         cantik[i].second = i;
                 }
 
-                sort(gemas, gemas + N);
-                sort(cantik, cantik + N);
+                sort(gemas, gemas + N, std::greater<pair<int,int> >());
+                sort(cantik, cantik + N, std::greater<pair<int,int> >());
                 for (int i=0;i<6;i++){
                         v[i*2] = gemas[i].second;
                         v[i*2 + 1] = cantik[i].second;
