@@ -19,5 +19,6 @@ public class SolutionAshar {
             }
             out.println(res);
         }
+        out.flush();
     }
 }
