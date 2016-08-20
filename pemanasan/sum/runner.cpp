@@ -43,15 +43,26 @@ private:
 class Generator : public BaseGenerator<Problem> {
 protected:
     void SampleTestCases() {
-        SAMPLE_CASE({"3","1","2","3"});
-        SAMPLE_CASE({"5","6","12","1","5","6"});
-        SAMPLE_CASE({"10","1000000000","1000000000","1000000000","1000000000","1000000000","1000000000","1000000000","1000000000","1000000000","1000000000"});
+        SAMPLE_CASE({
+            "3",
+            "100",
+            "200",
+            "300"
+        });
+        SAMPLE_CASE({
+            "5",
+            "923082016",
+            "927082016",
+            "922092016",
+            "923092016",
+            "924092016"
+        });
     }
 
     void TestCases() {
-       for (int i=0;i<10;i++) CASE(N = rnd.nextInt(90000,100000), randomNumbers(A, 1,1000000000));
-       for (int i=0;i<10;i++) CASE(N = rnd.nextInt(99000,100000), randomNumbers(A, 500000000,1000000000));
-     
+       for (int i=0;i<5;i++) CASE(N = rnd.nextInt(100,1000), randomNumbers(A, 1,1000000));
+       for (int i=0;i<14;i++) CASE(N = rnd.nextInt(99000,100000), randomNumbers(A, 500000000,1000000000));
+       CASE(N = 100000, randomNumbers(A, 500000000,1000000000));
     }
 
     private:
