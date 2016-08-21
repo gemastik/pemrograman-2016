@@ -116,8 +116,8 @@ protected:
 private:
     string toClock(int t){
         char ret[20];
-        sprintf(ret, "%d:%d:%d", t  / 3600 , (t / 60) % 60 , t % 60);
-        cout<<ret<<endl;
+        sprintf(ret, "%02d:%02d:%02d", t  / 3600 , (t / 60) % 60 , t % 60);
+       
         return ret;
     }
 
