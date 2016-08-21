@@ -32,6 +32,7 @@ protected:
         CONS(1 <= K && K <= 20);
         CONS(1 <= N && N <= 1000);
         CONS(eachElementLengthBetween(S,1,5));
+        CONS(validStrings(S));
         CONS(eachElementBetween(M,1,1000));
         CONS(eachElementSortedAscendingly(M));
     }
@@ -44,7 +45,7 @@ private:
     bool eachElementSortedAscendingly(const vector<int>& V) {
         int len = V.size();
         for (int i=1;i<len;i++){
-            if (V[i] <= V[i - 1]) 
+            if (V[i] <= V[i - 1])
                 return 0;
         }
         return 1;
@@ -56,6 +57,17 @@ private:
 
     bool eachElementLengthBetween(const vector<string>& S, int lo, int hi) {
         return all_of(S.begin(), S.end(),[lo, hi](string s) {return lo <= s.size() && s.size() <= hi;});
+    }
+
+    bool validStrings(const vector<string>& s) {
+        for (string t : s) {
+            for (char c : t) {
+                if (c < 'a' || c > 'z') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 };
 
