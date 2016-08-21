@@ -11,8 +11,8 @@ protected:
     int H_MIN, H_MAX;
     void Config() {
         setSlug("menara");
-        setTimeLimit(3);
-        setMemoryLimit(256);
+        setTimeLimit(1);
+        setMemoryLimit(64);
         setMultipleTestCasesCount(T);
     }
 
@@ -45,14 +45,27 @@ private:
 class Generator : public BaseGenerator<Problem> {
 protected:
     void SampleTestCases() {
-        SAMPLE_CASE({"3","1 2 3","5 4 6","9 8 7"});
-        SAMPLE_CASE({"1","6 6 6"});
-        SAMPLE_CASE({"2","1 1 1","10 20 30"});
+        SAMPLE_CASE({
+            "3",
+            "1 2 3",
+            "5 4 6",
+            "9 8 7"
+        });
+        SAMPLE_CASE({
+            "1",
+            "6 6 6"
+        });
+        SAMPLE_CASE({
+            "2",
+            "1 1 1",
+            "10 20 30"
+        });
     }
 
     void TestCases() {
        for (int i=0;i<10;i++) CASE(N = rnd.nextInt(90,100), randomNumbers(A, 1,30),randomNumbers(B, 1,30),randomNumbers(C, 1,30));
-       for (int i=0;i<10;i++) CASE(N = rnd.nextInt(90,100),randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
+       for (int i=0;i<9;i++) CASE(N = rnd.nextInt(90,100),randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
+       CASE(N = 100,randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
     }
 
     private:
