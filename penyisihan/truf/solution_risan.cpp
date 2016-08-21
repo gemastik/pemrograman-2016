@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <vector>
 
 using namespace std;
@@ -93,17 +94,17 @@ int main() {
   memset(dp, -1, sizeof(dp));
   int nTC;
   cin >> nTC;
-  while (nTC--) {
+  for (int tc = 0; tc < nTC; tc++) {
     vector<Card> cards;
     for (int i = 0; i < 13; i++) {
       string cardString;
       cin >> cardString;
       cards.emplace_back(cardString);
     }
+    if (tc) printf("\n");
     for (Card c : cards) {
-      printf("%c%c: %.3lf%%\n", nums[c.num], c.suit, getWinningProb(cards, c) * 100);
+      printf("%c%c: %.5lf%%\n", nums[c.num], c.suit, getWinningProb(cards, c) * 100);
     }
-    printf("\n");
   }
 
   return 0;
