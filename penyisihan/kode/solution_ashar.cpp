@@ -18,7 +18,7 @@ struct event {
 };
 event M[2*MAXN];
 
-int bit[MAXM];
+int bit[MAXM+1];
 void setb(int x) {
     for (int i = x; i <= MAXM; i += i & -i) {
         bit[i]++;
