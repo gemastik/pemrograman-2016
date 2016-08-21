@@ -18,13 +18,15 @@ struct event {
 };
 event M[2*MAXN];
 
-int bit[MAXM+1];
+int bit[MAXM+5];
 void setb(int x) {
+    x++;
     for (int i = x; i <= MAXM; i += i & -i) {
         bit[i]++;
     }
 }
 int getb(int x) {
+    x++;
     int res = 0;
     for (int i = x; i; i -= i & -i) {
         res += bit[i];
