@@ -14,8 +14,8 @@ protected:
 
     void Config() {
         setSlug("fizzbuzz");
-        setTimeLimit(3);
-        setMemoryLimit(256);
+        setTimeLimit(2);
+        setMemoryLimit(64);
         setMultipleTestCasesCount(T);
     }
 

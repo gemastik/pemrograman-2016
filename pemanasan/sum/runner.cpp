@@ -11,7 +11,7 @@ protected:
     long long RES;
     void Config() {
         setSlug("sum");
-        setTimeLimit(3);
+        setTimeLimit(2);
         setMemoryLimit(256);
         setMultipleTestCasesCount(T);
     }
