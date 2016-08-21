@@ -18,6 +18,6 @@ int main() {
                         res_max+=a[2];
                         res_min+=a[0];
                 }
-                printf("%d%d\n",res_min, res_max);
+                printf("%d %d\n",res_min, res_max);
         }
 }
