@@ -9,7 +9,7 @@ protected:
     int T;
     int N;
     vector<string> ST,ED;
-    string RES;
+    vector<int> RES;
 
     void Config() {
         setSlug("kode");
@@ -24,7 +24,7 @@ protected:
     }
 
     void OutputFormat() {
-        LINE(RES);
+        LINES(RES) % SIZE(N);
     }
 
     void Constraints() {
@@ -64,6 +64,12 @@ private:
 };
 
 class Generator : public BaseGenerator<Problem> {
+private:
+    const int MODE_RANDOM = 0;
+    const int SAME_END = 1;
+    const int SAME_START = 2;
+    const int SAME_BOTH = 3;
+
 protected:
     void SampleTestCases() {
         SAMPLE_CASE({"4",
@@ -78,41 +84,33 @@ protected:
 
     void TestCases() {
         //full random testcases
-        for (int i=0;i<30;i++){
-            N = rnd.nextInt(45000, 50000);
-            clearCase();
-            getRandomIntervals(N);
-            CASE();
+        for (int i=0;i<20;i++){
+            CASE(N = rnd.nextInt(45000, 50000), clearCase(), getRandomIntervals(N , MODE_RANDOM));
         }
         
         //full random testcases with high collision rate
-        for (int i=0;i<10;i++){
-            N = rnd.nextInt(45000, 50000);
-            getRandomIntervals(N , 0 , 1000);
-            CASE();
+        for (int i=0;i<20;i++){
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N , 0 , 1000 , MODE_RANDOM));
         }
-        /* not ready yet
-        //tricky builder 1
+
         for (int i=0;i<4;i++){
-            N = rnd.nextInt(45000, 50000);
-            clearCase();
-            getDuplicateIntervals(10000); //all same interval
-            getSameStartIntervals(10000); //same startpoints 
-            getSameEndIntervals(10000); //same endpoints
-            getRandomIntervals(N - 30000);
-            CASE(N, ST, ED);
+            CASE(N = rnd.nextInt(45000, 50000),
+            clearCase(),
+            getRandomIntervals(10000 , SAME_BOTH), //all same interval
+            getRandomIntervals(10000 , SAME_START), //same startpoints 
+            getRandomIntervals(10000 , SAME_END), //same endpoints
+            getRandomIntervals(N - 30000 , MODE_RANDOM));
         }
 
         //tricky builder 2: same like #1, but each subcases are separated
-        for (int i=0;i<3;i++){
-            N = rnd.nextInt(45000, 50000);
-            clearCase();
-            getDuplicateIntervals(10000, 0, 10000); //all same interval
-            getSameStartIntervals(10000, 10000, 20000); //same startpoints 
-            getSameEndIntervals(10000, 20000, 30000); //same endpoints
-            getRandomIntervals(N - 30000 , 30000, 40000);
-            CASE(N, ST, ED);
-        }*/
+        for (int i=0;i<6;i++){
+            CASE(N = rnd.nextInt(45000, 50000),
+            clearCase(),
+            getRandomIntervals(10000, 0, 10000 , SAME_BOTH), //all same interval
+            getRandomIntervals(10000, 10000, 20000 , SAME_START), //same startpoints 
+            getRandomIntervals(10000, 20000, 30000 , SAME_END), //same endpoints
+            getRandomIntervals(N - 30000 , 30000, 80000 , MODE_RANDOM));
+        }
     }
 
 private:
@@ -127,10 +125,22 @@ private:
         ED.clear();
     }
 
-    void getRandomIntervals(int amount, int minval, int maxval){
+    void getRandomIntervals(int amount, int minval, int maxval, int mode){
+        int st;
+        int ed;
+
         for (int i=0;i<amount;i++){
-            int st = rnd.nextInt(minval, maxval);
-            int ed = rnd.nextInt(minval, maxval);
+            //batch shuffle
+            if (i % 100 == 0) {
+                st = rnd.nextInt(minval, maxval);
+                ed = rnd.nextInt(minval, maxval);
+            }
+            if (mode == SAME_END || mode == MODE_RANDOM) {
+                st = rnd.nextInt(minval, maxval);
+            }
+            if (mode == SAME_START || mode == MODE_RANDOM) {
+                ed = rnd.nextInt(minval, maxval);
+            }
             if (st > ed) swap(st,ed);
             if (st == ed && ed < maxval) ed++;
             if (st == ed && st > minval) st--;
@@ -140,8 +150,8 @@ private:
         }
     }
 
-    void getRandomIntervals(int amount) {
-        getRandomIntervals(amount,0, 24*60*60 - 1);
+    void getRandomIntervals(int amount, int mode) {
+        getRandomIntervals(amount,0, 24*60*60 - 1, mode);
     }
 };
 

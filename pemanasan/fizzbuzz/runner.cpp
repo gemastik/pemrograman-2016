@@ -82,7 +82,11 @@ private:
             int tmp = rnd.nextInt(now + 1, now + 50);
             now = tmp;
             M.push_back(tmp);
-            S.push_back("a" + to_string(rnd.nextInt('a', 'z')));
+            string s = "";
+            s += rnd.nextInt('a','z');
+            s += rnd.nextInt('a','z');
+            s += rnd.nextInt('a','z');
+            S.push_back(s);
         }
     }
 };
