@@ -91,6 +91,7 @@ protected:
 
 
     void TestCases() {
+       CASE(maut());
        CASE(N = 10, randomNames() , G = {5,5,5,6,6,6,1,1,1,3} , C = {5,5,5,1,1,1,6,6,6,3});
        CASE(N = 10, randomNames(), G = {10,10,10,1,1,1,3,4,2,2} , C = {9,9,9,8,8,8,5,4,2,1} );
        CASE(N = 10, randomNames(), G = {9,9,9,8,8,8,5,4,2,1} , C = {10,10,10,1,1,1,3,4,2,2} );
@@ -100,13 +101,43 @@ protected:
        CASE(N = 6, randomNames() , G = {1000,1000,1000,1,1,1} , C = {5,4,3,2,1,1});
        CASE(N = 6, randomNames() , G = {99,99,99,1,1,1}, C = {100,1,1,99,99,99} );
        CASE(N = 9, randomNames() , G = {5,5,5,1,1,1,1,1,1}, C = {5,5,5,9,9,9,9,9,9});
-       for (int i=0;i<10;i++) CASE(N = 45312, randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
+       for (int i=0;i<9;i++) CASE(N = 45312, randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
        for (int i=0;i<5;i++) CASE(N = 48999, randomNames() , randomNumbers(G, 1,100), randomNumbers(C, 1,100));
        for (int i=0;i<6;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,1000), randomNumbers(C, 1,1000));
 
     }
 
     private:
+        void add_data(int g,int c) {
+            G.push_back(g);
+            C.push_back(c);
+        }
+        void maut() {
+            N = 616;
+            randomNames();
+            G.clear();
+            C.clear();
+            //random
+            for (int i=0;i<110;i++) add_data(94,96);
+
+            //gemas
+            add_data(95,1);
+            add_data(100,99);
+            add_data(99,100);
+
+            //cantik
+            add_data(99,101);
+            add_data(1,98);
+            add_data(1,97);
+            
+            for (int i=0;i<100;i++) add_data(90,90);
+            for (int i=0;i<100;i++) add_data(94,2);
+            for (int i=0;i<100;i++) add_data(2,95);
+            for (int i=0;i<100;i++) add_data(93,93);
+            for (int i=0;i<100;i++) add_data(2,2);
+        }
+
+
         string get_string(int x){
             string res = to_string(x);
             for (int i=0;i<res.size();i++)
