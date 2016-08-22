@@ -11,9 +11,9 @@ protected:
     string RES;
 
     void Config() {
-        setSlug("gemas");
-        setTimeLimit(3);
-        setMemoryLimit(256);
+        setSlug("saklar");
+        setTimeLimit(2);
+        setMemoryLimit(64);
         setMultipleTestCasesCount(T);
     }
 
