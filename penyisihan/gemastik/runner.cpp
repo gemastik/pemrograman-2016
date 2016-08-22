@@ -11,7 +11,7 @@ protected:
     vector<string> I;
 
     string nama[6];
-
+    long long RES;
     void Config() {
         setSlug("gemas");
         setTimeLimit(3);
@@ -25,6 +25,7 @@ protected:
     }
 
     void OutputFormat() {
+        LINE(RES);
         LINE(nama[0], nama[1], nama[2]);
         LINE(nama[3], nama[4], nama[5]);
     }
@@ -32,10 +33,12 @@ protected:
     void Constraints() {
         CONS(6 <= N && N <= 50000);
         CONS(eachElementLengthBetween(I,1,8));
+        CONS(eachElementBetween(G,1,100000));
+        CONS(eachElementBetween(C,1,100000));
     }
 
     void MultipleTestCasesConstraints() {
-        CONS(T <= 25);
+        CONS(T <= 30);
     }
 
 private:
@@ -51,11 +54,19 @@ private:
 class Generator : public BaseGenerator<Problem> {
 protected:
     void SampleTestCases() {
+        SAMPLE_CASE({"6",
+            "dana 10 9",
+            "dini 10 9",
+            "dani 10 9",
+            "dono 9 10",
+            "dona 9 10",
+            "dina 9 10"
+        });
         SAMPLE_CASE({"9",
             "abdul 3 3",
             "afaji 7 6",
-            "alham 11 6",
-            "alice 7 12",
+            "alham 10 6",
+            "alice 7 10",
             "budi 5 3",
             "jack 3 10",
             "kwak 10 10",
@@ -78,6 +89,7 @@ protected:
         });
     }
 
+
     void TestCases() {
        CASE(N = 10, randomNames() , G = {5,5,5,6,6,6,1,1,1,3} , C = {5,5,5,1,1,1,6,6,6,3});
        CASE(N = 10, randomNames(), G = {10,10,10,1,1,1,3,4,2,2} , C = {9,9,9,8,8,8,5,4,2,1} );
@@ -88,7 +100,7 @@ protected:
        CASE(N = 6, randomNames() , G = {1000,1000,1000,1,1,1} , C = {5,4,3,2,1,1});
        CASE(N = 6, randomNames() , G = {99,99,99,1,1,1}, C = {100,1,1,99,99,99} );
        CASE(N = 9, randomNames() , G = {5,5,5,1,1,1,1,1,1}, C = {5,5,5,9,9,9,9,9,9});
-       for (int i=0;i<5;i++) CASE(N = 45312, randomNames() , randomNumbers(G, 1,1000000), randomNumbers(C, 1,1000000));
+       for (int i=0;i<10;i++) CASE(N = 45312, randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
        for (int i=0;i<5;i++) CASE(N = 48999, randomNames() , randomNumbers(G, 1,100), randomNumbers(C, 1,100));
        for (int i=0;i<6;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,1000), randomNumbers(C, 1,1000));
 

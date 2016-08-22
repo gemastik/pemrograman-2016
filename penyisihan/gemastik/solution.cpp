@@ -18,7 +18,7 @@ void coba(int i,int j,int k,int x,int y,int z){
                 return;
         if (y == z)
                 return;
-        int res = f_gemas[i] + f_gemas[j] + f_gemas[k] + f_cantik[x] + f_cantik[y] + f_cantik[z];
+        int res = (f_gemas[i] * f_gemas[j] * f_gemas[k]) + (f_cantik[x] * f_cantik[y] * f_cantik[z]);
         if (res > best){
                 best = res;
                 a = i; b = j; c = k;
@@ -61,7 +61,7 @@ int main() {
                                                         for (int z=0;z<SZ;z++){
                                                                 coba(i,j,k,x,y,z);
                                                         }
-
+                cout<<best<<endl;
                 cout<<nama[a]<<" "<<nama[b]<<" "<<nama[c]<<endl;
                 cout<<nama[d]<<" "<<nama[e]<<" "<<nama[f]<<endl;
         }
