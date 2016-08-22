@@ -46,14 +46,16 @@ protected:
     }
 
     void TestCases() {
-        for (int i=0;i<15;i++)
+        CASE(L = 12, B = 4);
+        for (int i=0;i<14;i++)
             CASE(L = rnd.nextInt(2,100), B = 0);
-        for (int i=0;i<15;i++)
+        for (int i=0;i<14;i++)
             CASE(L = 0, B = rnd.nextInt(2,100));
         for (int i=0;i<10;i++)
             CASE(L = rnd.nextInt(1,100), B = rnd.nextInt(1,100));
         for (int i=0;i<10;i++)
             CASE(L = rnd.nextInt(50,100), B = rnd.nextInt(50,100));
+        CASE(L = 100, B = 100);
     }
 };
 
