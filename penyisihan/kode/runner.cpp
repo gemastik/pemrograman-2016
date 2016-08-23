@@ -35,7 +35,7 @@ protected:
     }
 
     void MultipleTestCasesConstraints() {
-        CONS(T <= 50);
+        CONS(T <= 20);
     }
 
 
@@ -82,17 +82,19 @@ protected:
                     "00:00:01 00:00:03"});
     }
 
-    void TestCases() {
+    void TestGroup1() {
+        assignToSubtasks({-1});
         //full random testcases
-        for (int i=0;i<20;i++){
-            CASE(N = rnd.nextInt(45000, 50000), clearCase(), getRandomIntervals(N , MODE_RANDOM));
+        for (int i=0;i<10;i++){
+            CASE(N = rnd.nextInt(5000, 50000), clearCase(), getRandomIntervals(N , MODE_RANDOM));
         }
-        
-        //full random testcases with high collision rate
-        for (int i=0;i<20;i++){
+        for (int i=0;i<10;i++){
             CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N , 0 , 1000 , MODE_RANDOM));
         }
+    }
 
+    void TestGroup2(){
+        assignToSubtasks({-1});
         for (int i=0;i<4;i++){
             CASE(N = rnd.nextInt(45000, 50000),
             clearCase(),
@@ -111,9 +113,28 @@ protected:
             getRandomIntervals(10000, 20000, 30000 , SAME_END), //same endpoints
             getRandomIntervals(N - 30000 , 30000, 80000 , MODE_RANDOM));
         }
+        //tricky builder 3:
+        for (int i=0;i<8;i++){
+            CASE(trickyBuilder());
+        }
+        //edge case 1
+        CASE(N = 50000, clearCase(), getRandomIntervals(N , MODE_RANDOM));
+        //edge case 2
+        CASE(N = 3, ST = {"00:00:00" , "00:00:00" , "23:59:58"} , ED = {"00:00:01" , "23:59:59" , "23:59:59"});
+
     }
 
 private:
+    void trickyBuilder(){
+        clearCase();
+        N = rnd.nextInt(450, 500) * 10;
+        int st = 0;
+        for (int i=1;i<N;i+=10){
+            getRandomIntervals(10 , st , st + 100, MODE_RANDOM);
+            st += 100;
+        }
+    }
+
     string toClock(int t){
         char ret[20];
         sprintf(ret, "%02d:%02d:%02d", t  / 3600 , (t / 60) % 60 , t % 60);

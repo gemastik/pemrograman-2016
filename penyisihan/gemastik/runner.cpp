@@ -38,7 +38,7 @@ protected:
     }
 
     void MultipleTestCasesConstraints() {
-        CONS(T <= 30);
+        CONS(T <= 20);
     }
 
 private:
@@ -90,25 +90,38 @@ protected:
     }
 
 
-    void TestCases() {
-       CASE(maut());
-       CASE(N = 10, randomNames() , G = {5,5,5,6,6,6,1,1,1,3} , C = {5,5,5,1,1,1,6,6,6,3});
-       CASE(N = 10, randomNames(), G = {10,10,10,1,1,1,3,4,2,2} , C = {9,9,9,8,8,8,5,4,2,1} );
-       CASE(N = 10, randomNames(), G = {9,9,9,8,8,8,5,4,2,1} , C = {10,10,10,1,1,1,3,4,2,2} );
-       CASE(N = 6, randomNames() , G = {5,4,3,2,1,1} , C = {1000,1000,1000,1,1,1} );
-       CASE(N = 6, randomNames() , G = {100,1,1,99,99,99} , C = {99,99,99,1,1,1} );
-       CASE(N = 9, randomNames() , G = {5,5,5,9,9,9,9,9,9} , C = {5,5,5,1,1,1,1,1,1});
-       CASE(N = 6, randomNames() , G = {1000,1000,1000,1,1,1} , C = {5,4,3,2,1,1});
-       CASE(N = 6, randomNames() , G = {99,99,99,1,1,1}, C = {100,1,1,99,99,99} );
-       CASE(N = 9, randomNames() , G = {5,5,5,1,1,1,1,1,1}, C = {5,5,5,9,9,9,9,9,9});
-       CASE(N = 50000, randomNames() , randomNumbers(G, 100000,100000), randomNumbers(C, 100000,100000)); //extreme case
-       for (int i=0;i<8;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
-       for (int i=0;i<5;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100), randomNumbers(C, 1,100));
-       for (int i=0;i<6;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,1000), randomNumbers(C, 1,1000));
+    void TestGroup1() {
+        assignToSubtasks({-1});
+        CASE(maut());
+        CASE(N = 10, randomNames() , G = {5,5,5,6,6,6,1,1,1,3} , C = {5,5,5,1,1,1,6,6,6,3});
+        CASE(N = 10, randomNames(), G = {10,10,10,1,1,1,3,4,2,2} , C = {9,9,9,8,8,8,5,4,2,1} );
+        CASE(N = 10, randomNames(), G = {9,9,9,8,8,8,5,4,2,1} , C = {10,10,10,1,1,1,3,4,2,2} );
+        CASE(N = 6, randomNames() , G = {5,4,3,2,1,1} , C = {1000,1000,1000,1,1,1} );
+        CASE(N = 6, randomNames() , G = {100,1,1,99,99,99} , C = {99,99,99,1,1,1} );
+        CASE(N = 9, randomNames() , G = {5,5,5,9,9,9,9,9,9} , C = {5,5,5,1,1,1,1,1,1});
+        CASE(N = 6, randomNames() , G = {1000,1000,1000,1,1,1} , C = {5,4,3,2,1,1});
+        CASE(N = 6, randomNames() , G = {99,99,99,1,1,1}, C = {100,1,1,99,99,99} );
+        CASE(N = 9, randomNames() , G = {5,5,5,1,1,1,1,1,1}, C = {5,5,5,9,9,9,9,9,9});
+        CASE(N = 50000, randomNames() , randomNumbers(G, 100000,100000), randomNumbers(C, 100000,100000)); //extreme case
+        for (int i=0;i<3;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
+        //yg jago cuman 5 orang. konflik.
+        for (int i=0;i<6;i++) CASE(N = 5, randomNumbers(G, 50,100), randomNumbers(C, 50,100), add_useless(50000 - 5) , N = 50000, randomNames());
+    }
+    
+    void TestGroup2() {
+        assignToSubtasks({-1});
+        for (int i=0;i<10;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100), randomNumbers(C, 1,100));
+        for (int i=0;i<10;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,1000), randomNumbers(C, 1,1000));
 
     }
 
     private:
+        void add_useless(int n) {
+            for (int i=0;i<n;i++){
+                add_data(1,1);
+            }
+        }
+
         void add_data(int g,int c) {
             G.push_back(g);
             C.push_back(c);

@@ -33,7 +33,7 @@ protected:
     }
 
     void MultipleTestCasesConstraints() {
-        CONS(T <= 50);
+        CONS(T <= 20);
     }
 };
 
@@ -45,17 +45,29 @@ protected:
         SAMPLE_CASE({"8 8"});
     }
 
-    void TestCases() {
+    void TestGroup1() {
+        assignToSubtasks({-1});
         CASE(L = 4, B = 12);
-        for (int i=0;i<14;i++)
+        CASE(L = 12, B = 4);
+        CASE(L = 1, B = 1);
+        CASE(L = 2, B = 0);
+        CASE(L = 0, B = 2);
+        CASE(L = 0, B = 100);
+        CASE(L = 100, B = 0);
+        CASE(L = 100, B = 100);
+        for (int i=0;i<6;i++)
             CASE(L = rnd.nextInt(2,100), B = 0);
-        for (int i=0;i<14;i++)
+        for (int i=0;i<6;i++)
             CASE(L = 0, B = rnd.nextInt(2,100));
+        
+    }
+
+    void TestGroup2() {
+        assignToSubtasks({-1});
         for (int i=0;i<10;i++)
             CASE(L = rnd.nextInt(1,100), B = rnd.nextInt(1,100));
         for (int i=0;i<10;i++)
             CASE(L = rnd.nextInt(50,100), B = rnd.nextInt(50,100));
-        CASE(L = 100, B = 100);
     }
 };
 

@@ -34,7 +34,7 @@ protected:
     }
 
     void MultipleTestCasesConstraints() {
-        CONS(T <= 25);
+        CONS(T <= 20);
     }
 
 private:
@@ -66,7 +66,8 @@ protected:
         });
     }
 
-    void TestCases() {
+    void TestGroup1() {
+        assignToSubtasks({-1});
         //tricky #1: can't reach the destination except flight
         CASE(N = 100, S = 100, P = 100 , randomNumbers(K, 11,11),randomNumbers(V, 1,1000));
         //tricky #2: impossible
@@ -80,21 +81,27 @@ protected:
         //tricky #6: gratisan, ga ada indah2nya
         CASE(N = 1000, S = 0, P = 0, randomNumbers(K, 0,0),randomNumbers(V, 0,0));  
         // cheap train, cheap flight
-        for (int i=0;i<2;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(50,100),randomNumbers(K, 0,10),randomNumbers(V, 0,1000));
+        for (int i=0;i<4;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(50,100),randomNumbers(K, 0,10),randomNumbers(V, 0,1000));
        // expensive flight mode
-        for (int i=0;i<3;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(500,1000),randomNumbers(K, 0,100),randomNumbers(V, 0,1000));
+        for (int i=0;i<4;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(500,1000),randomNumbers(K, 0,100),randomNumbers(V, 0,1000));
         // super cheap flight mode
-        for (int i=0;i<3;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(1,10),randomNumbers(K, 0,100),randomNumbers(V, 0,1000));
-        //cheap flight, expensive train
-        for (int i=0;i<3;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(50,100),randomNumbers(K, 100,1000),randomNumbers(V, 0,1000));
-        //high beauty
-        for (int i=0;i<3;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = 20,randomNumbers(K, 0,100),randomNumbers(V, 500,1000));
-        //low beauty
-        for (int i=0;i<3;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = 20,randomNumbers(K, 0,100),randomNumbers(V, 1,10));
+        for (int i=0;i<4;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(1,10),randomNumbers(K, 0,100),randomNumbers(V, 0,1000));
         //full random
         CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(1,1000),randomNumbers(K, 0,1000),randomNumbers(V, 0,1000));    
         CASE(N = 1000, S = 1000, P = 10,randomNumbers(K, 0,1000),randomNumbers(V, 0,1000));
    
+    }
+
+    void TestGroup2() {
+        assignToSubtasks({-1});
+        //high beauty
+        for (int i=0;i<5;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = 20,randomNumbers(K, 0,100),randomNumbers(V, 500,1000));
+        //low beauty
+        for (int i=0;i<5;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = 20,randomNumbers(K, 0,100),randomNumbers(V, 1,10));
+        //cheap flight, expensive train
+        for (int i=0;i<5;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(50,100),randomNumbers(K, 100,1000),randomNumbers(V, 0,1000));
+        // super cheap flight mode
+        for (int i=0;i<5;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(1,10),randomNumbers(K, 0,100),randomNumbers(V, 0,1000));
     }
 
     private:
