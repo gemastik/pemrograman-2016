@@ -63,9 +63,11 @@ protected:
     }
 
     void TestCases() {
-       for (int i=0;i<10;i++) CASE(N = rnd.nextInt(90,100), randomNumbers(A, 1,30),randomNumbers(B, 1,30),randomNumbers(C, 1,30));
-       for (int i=0;i<9;i++) CASE(N = rnd.nextInt(90,100),randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
-       CASE(N = 100,randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
+        for (int i=0;i<9;i++) CASE(N = rnd.nextInt(90,100), randomNumbers(A, 1,30),randomNumbers(B, 1,30),randomNumbers(C, 1,30));
+        for (int i=0;i<9;i++) CASE(N = rnd.nextInt(90,100),randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
+        CASE(N = 100,randomNumbers(A, 1,1000),randomNumbers(B, 1,1000),randomNumbers(C, 1,1000));
+        CASE(N = 100,randomNumbers(A, 1000,1000),randomNumbers(B, 1000,1000),randomNumbers(C, 1000,1000));
+   
     }
 
     private:

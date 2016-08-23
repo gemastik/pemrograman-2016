@@ -101,8 +101,9 @@ protected:
        CASE(N = 6, randomNames() , G = {1000,1000,1000,1,1,1} , C = {5,4,3,2,1,1});
        CASE(N = 6, randomNames() , G = {99,99,99,1,1,1}, C = {100,1,1,99,99,99} );
        CASE(N = 9, randomNames() , G = {5,5,5,1,1,1,1,1,1}, C = {5,5,5,9,9,9,9,9,9});
-       for (int i=0;i<9;i++) CASE(N = 45312, randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
-       for (int i=0;i<5;i++) CASE(N = 48999, randomNames() , randomNumbers(G, 1,100), randomNumbers(C, 1,100));
+       CASE(N = 50000, randomNames() , randomNumbers(G, 100000,100000), randomNumbers(C, 100000,100000)); //extreme case
+       for (int i=0;i<8;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
+       for (int i=0;i<5;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100), randomNumbers(C, 1,100));
        for (int i=0;i<6;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,1000), randomNumbers(C, 1,1000));
 
     }
