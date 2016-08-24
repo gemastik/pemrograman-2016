@@ -59,7 +59,7 @@ int main() {
                                         for (int x=0;x<SZ;x++)
                                                 for (int y=0;y<SZ;y++)
                                                         for (int z=0;z<SZ;z++){
-                                                                coba(i,j,k,x,y,z);
+                                                                coba(v[i],v[j],v[k],v[x],v[y],v[z]);
                                                         }
                 cout<<best<<endl;
                 cout<<nama[a]<<" "<<nama[b]<<" "<<nama[c]<<endl;
