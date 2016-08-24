@@ -11,7 +11,7 @@ public class SolutionAshar {
     static int[] ids = new int[12];
     static int M;
 
-    static int resValue;
+    static long resBeauty, resCuteness;
     static String[] resNames = new String[6];
     static boolean[] used = new boolean[MAX];
 
@@ -40,16 +40,16 @@ public class SolutionAshar {
 
             Integer[] allIds = new Integer[N];
             for (int i = 0; i < N; i++) {
-		allIds[i] = i;
+                        allIds[i] = i;
             }
             boolean[] isRelevant = new boolean[N];
 
-            Arrays.sort(allIds, (id1, id2) -> Integer.compare(students[id1].cuteness, students[id2].cuteness));
+            Arrays.sort(allIds, (id1, id2) -> Integer.compare(students[id2].cuteness, students[id1].cuteness));
             for (int i = 0; i < 6; i++) {
                 isRelevant[allIds[i]] = true;
             }
 
-            Arrays.sort(allIds, (id1, id2) -> Integer.compare(students[id1].beauty, students[id2].beauty));
+            Arrays.sort(allIds, (id1, id2) -> Integer.compare(students[id2].beauty, students[id1].beauty));
             for (int i = 0; i < 6; i++) {
                 isRelevant[allIds[i]] = true;
             }
@@ -63,19 +63,20 @@ public class SolutionAshar {
                 }
             }
 
-            resValue = 0;
-            go(0, 0, new String[6]);
+            resCuteness = resBeauty = 0;
+            go(0, 1, 1, new String[6]);
 
+            System.out.printf("%d%n", resCuteness + resBeauty);
             System.out.printf("%s %s %s%n", resNames[0], resNames[1], resNames[2]);
             System.out.printf("%s %s %s%n", resNames[3], resNames[4], resNames[5]);
-
         }
     }
 
-    static void go(int cur, int curValue, String[] curNames) {
+    static void go(int cur, long curCuteness, long curBeauty, String[] curNames) {
         if (cur == 6) {
-            if (curValue > resValue) {
-                resValue = curValue;
+            if (curCuteness + curBeauty > resCuteness + resBeauty) {
+                resCuteness = curCuteness;
+                resBeauty = curBeauty;
                 for (int i = 0; i < 6; i++) {
                     resNames[i] = curNames[i];
                 }
@@ -88,8 +89,9 @@ public class SolutionAshar {
             }
             used[i] = true;
             curNames[cur] = students[ids[i]].name;
-            int newValue = curValue + (cur < 3 ? students[ids[i]].cuteness : students[ids[i]].beauty);
-            go(cur+1, newValue, curNames);
+            long newCuteness = curCuteness * (cur < 3 ? students[ids[i]].cuteness : 1L);
+            long newBeauty = curBeauty * (cur >= 3 ? students[ids[i]].beauty : 1L);
+            go(cur+1, newCuteness, newBeauty, curNames);
             used[i] = false;
         }
     }
