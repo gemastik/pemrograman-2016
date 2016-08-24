@@ -40,24 +40,30 @@ protected:
 
 
 private:
-    bool isValidClock(const string& st){
-        try {
-            int h,m,s;
-            sscanf(&st[0],"%d:%d:%d",&h,&m,&s);
-            if (h < 0 || m < 0 || s < 0 || h > 23 || m > 59 || s > 59)
-                return 0;
+    int parseClock(const string& st){
+        int h,m,s;
+        if (sscanf(st.c_str(),"%d:%d:%d",&h,&m,&s) != 3) {
+            return -1;
         }
-        catch(...){
-            return 0;
-        }
-        return 1;
+        if (h < 0 || m < 0 || s < 0 || h > 23 || m > 59 || s > 59)
+            return -1;
+        return h * 60 * 60 + m * 60 + s;
     }
 
     bool eachElementValidClock(const vector<string>& V) {
         int N = V.size();
         for (int i=0;i<N;i++){
-            if (!isValidClock(V[i]))
+            if (parseClock(V[i]) == -1)
                 return 0;
+        }
+        return 1;
+    }
+
+    bool eachIntervalValid(const vector<string>& a, const vector<string>& b) {
+        for (int i = 0; i < a.size(); i++) {
+            if (parseClock(a[i]) >= parseClock(b[i])) {
+                return 0;
+            }
         }
         return 1;
     }
@@ -104,7 +110,7 @@ protected:
             CASE(N = rnd.nextInt(45000, 50000),
             clearCase(),
             getRandomIntervals(10000 , SAME_BOTH), //all same interval
-            getRandomIntervals(10000 , SAME_START), //same startpoints 
+            getRandomIntervals(10000 , SAME_START), //same startpoints
             getRandomIntervals(10000 , SAME_END), //same endpoints
             getRandomIntervals(N - 30000 , MODE_RANDOM));
         }
@@ -114,7 +120,7 @@ protected:
             CASE(N = rnd.nextInt(45000, 50000),
             clearCase(),
             getRandomIntervals(10000, 0, 10000 , SAME_BOTH), //all same interval
-            getRandomIntervals(10000, 10000, 20000 , SAME_START), //same startpoints 
+            getRandomIntervals(10000, 10000, 20000 , SAME_START), //same startpoints
             getRandomIntervals(10000, 20000, 30000 , SAME_END), //same endpoints
             getRandomIntervals(N - 30000 , 30000, 80000 , MODE_RANDOM));
         }
@@ -122,7 +128,7 @@ protected:
 
     void TestGroup4(){
         assignToSubtasks({-1});
-        
+
         CASE(allDisjoint());
         CASE(allDisjoint());
 
@@ -159,7 +165,7 @@ private:
     string toClock(int t){
         char ret[20];
         sprintf(ret, "%02d:%02d:%02d", t  / 3600 , (t / 60) % 60 , t % 60);
-       
+
         return ret;
     }
 
