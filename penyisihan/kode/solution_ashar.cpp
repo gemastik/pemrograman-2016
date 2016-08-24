@@ -13,7 +13,7 @@ enum {END, START};
 struct event {
     int id, x, type;
     bool operator<(const event& o) const {
-        return make_tuple(x, type, -E[id]) < make_tuple(o.x, o.type, -E[o.id]);
+        return make_tuple(x, type, -E[id], -S[id]) < make_tuple(o.x, o.type, -E[o.id], -S[o.id]);
     }
 };
 event M[2*MAXN];
