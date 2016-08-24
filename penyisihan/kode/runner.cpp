@@ -13,7 +13,7 @@ protected:
 
     void Config() {
         setSlug("kode");
-        setTimeLimit(3);
+        setTimeLimit(2);
         setMemoryLimit(256);
         setMultipleTestCasesCount(T);
     }
@@ -35,7 +35,7 @@ protected:
     }
 
     void MultipleTestCasesConstraints() {
-        CONS(T <= 20);
+        CONS(T <= 10);
     }
 
 
@@ -88,12 +88,17 @@ protected:
         for (int i=0;i<10;i++){
             CASE(N = rnd.nextInt(5000, 50000), clearCase(), getRandomIntervals(N , MODE_RANDOM));
         }
+    }
+
+    void TestGroup2(){
+        assignToSubtasks({-1});
+
         for (int i=0;i<10;i++){
             CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N , 0 , 1000 , MODE_RANDOM));
         }
     }
 
-    void TestGroup2(){
+    void TestGroup3(){
         assignToSubtasks({-1});
         for (int i=0;i<4;i++){
             CASE(N = rnd.nextInt(45000, 50000),
@@ -113,8 +118,16 @@ protected:
             getRandomIntervals(10000, 20000, 30000 , SAME_END), //same endpoints
             getRandomIntervals(N - 30000 , 30000, 80000 , MODE_RANDOM));
         }
+    }
+
+    void TestGroup4(){
+        assignToSubtasks({-1});
+        
+        CASE(allDisjoint());
+        CASE(allDisjoint());
+
         //tricky builder 3:
-        for (int i=0;i<8;i++){
+        for (int i=0;i<6;i++){
             CASE(trickyBuilder());
         }
         //edge case 1
@@ -125,6 +138,14 @@ protected:
     }
 
 private:
+    void allDisjoint(){
+        clearCase();
+        N = 50000;
+        for (int i=0;i<N;i++){
+            getRandomIntervals(1,i,i+1, MODE_RANDOM);
+        }
+    }
+
     void trickyBuilder(){
         clearCase();
         N = rnd.nextInt(450, 500) * 10;
