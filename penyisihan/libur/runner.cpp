@@ -11,7 +11,7 @@ protected:
     int RES;
     void Config() {
         setSlug("libur");
-        setTimeLimit(2);
+        setTimeLimit(3);
         setMemoryLimit(64);
         setMultipleTestCasesCount(T);
     }
@@ -34,7 +34,7 @@ protected:
     }
 
     void MultipleTestCasesConstraints() {
-        CONS(T <= 20);
+        CONS(T <= 10);
     }
 
 private:
@@ -83,6 +83,9 @@ protected:
         // cheap train, cheap flight
         for (int i=0;i<4;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(50,100),randomNumbers(K, 0,10),randomNumbers(V, 0,1000));
        // expensive flight mode
+    }
+    void TestGroup2(){
+        assignToSubtasks({-1});
         for (int i=0;i<4;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(500,1000),randomNumbers(K, 0,100),randomNumbers(V, 0,1000));
         // super cheap flight mode
         for (int i=0;i<4;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(1,10),randomNumbers(K, 0,100),randomNumbers(V, 0,1000));
@@ -92,13 +95,17 @@ protected:
    
     }
 
-    void TestGroup2() {
+    void TestGroup3() {
         assignToSubtasks({-1});
         //high beauty
         for (int i=0;i<5;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = 20,randomNumbers(K, 0,100),randomNumbers(V, 500,1000));
         //low beauty
         for (int i=0;i<5;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = 20,randomNumbers(K, 0,100),randomNumbers(V, 1,10));
         //cheap flight, expensive train
+    }
+
+    void TestGroup4(){
+        assignToSubtasks({-1});
         for (int i=0;i<5;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(50,100),randomNumbers(K, 100,1000),randomNumbers(V, 0,1000));
         // super cheap flight mode
         for (int i=0;i<5;i++) CASE(N = rnd.nextInt(900,1000), S = rnd.nextInt(900,1000), P = rnd.nextInt(1,10),randomNumbers(K, 0,100),randomNumbers(V, 0,1000));

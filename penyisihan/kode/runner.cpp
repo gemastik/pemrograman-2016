@@ -13,7 +13,7 @@ protected:
 
     void Config() {
         setSlug("kode");
-        setTimeLimit(2);
+        setTimeLimit(3);
         setMemoryLimit(256);
         setMultipleTestCasesCount(T);
     }

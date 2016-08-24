@@ -38,7 +38,7 @@ protected:
     }
 
     void MultipleTestCasesConstraints() {
-        CONS(T <= 20);
+        CONS(T <= 10);
     }
 
 private:
@@ -102,17 +102,24 @@ protected:
         CASE(N = 6, randomNames() , G = {1000,1000,1000,1,1,1} , C = {5,4,3,2,1,1});
         CASE(N = 6, randomNames() , G = {99,99,99,1,1,1}, C = {100,1,1,99,99,99} );
         CASE(N = 9, randomNames() , G = {5,5,5,1,1,1,1,1,1}, C = {5,5,5,9,9,9,9,9,9});
+    }
+
+    void TestGroup2(){
+        assignToSubtasks({-1});
         CASE(N = 50000, randomNames() , randomNumbers(G, 100000,100000), randomNumbers(C, 100000,100000)); //extreme case
         for (int i=0;i<3;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
         //yg jago cuman 5 orang. konflik.
         for (int i=0;i<6;i++) CASE(N = 5, randomNumbers(G, 50,100), randomNumbers(C, 50,100), add_useless(50000 - 5) , N = 50000, randomNames());
     }
     
-    void TestGroup2() {
+    void TestGroup3() {
         assignToSubtasks({-1});
         for (int i=0;i<10;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100), randomNumbers(C, 1,100));
+    }
+    
+    void TestGroup4(){
+        assignToSubtasks({-1});
         for (int i=0;i<10;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,1000), randomNumbers(C, 1,1000));
-
     }
 
     private:
