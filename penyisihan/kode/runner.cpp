@@ -13,7 +13,7 @@ protected:
 
     void Config() {
         setSlug("kode");
-        setTimeLimit(3);
+        setTimeLimit(10000);
         setMemoryLimit(256);
         setMultipleTestCasesCount(T);
     }
@@ -89,67 +89,77 @@ protected:
                     "00:00:02 00:00:10"});
     }
 
+    // random, dengan interval paling panjang 100 atau 1000. 0.0001% interval TIDAK mengikuti aturan tsb.
     void TestGroup1() {
         assignToSubtasks({-1});
         //full random testcases
-        for (int i=0;i<10;i++){
-            CASE(N = rnd.nextInt(5000, 50000), clearCase(), getRandomIntervals(N , MODE_RANDOM));
+        for (int i=0;i<5;i++){
+            CASE(N = rnd.nextInt(45000, 50000), clearCase(), getRandomIntervals(N , MODE_RANDOM,  100 , 0.0001));
+            CASE(N = rnd.nextInt(45000, 50000), clearCase(), getRandomIntervals(N , MODE_RANDOM,  1000 , 0.0001));
         }
     }
 
+     // mirip TC1. parameter lebih di-tweak.
     void TestGroup2(){
         assignToSubtasks({-1});
-
-        for (int i=0;i<10;i++){
-            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N , 0 , 1000 , MODE_RANDOM));
+        for (int i=0;i<2;i++){
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 1 , 0.001));
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 5 , 0.0));
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 10 , 0.0));
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 100 , 0.0));
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 200 , 0.0));
         }
+
     }
 
+    // BANYAK interval duplikat. Jawaban mayoritas -1
     void TestGroup3(){
         assignToSubtasks({-1});
         for (int i=0;i<4;i++){
             CASE(N = rnd.nextInt(45000, 50000),
             clearCase(),
-            getRandomIntervals(10000 , SAME_BOTH), //all same interval
-            getRandomIntervals(10000 , SAME_START), //same startpoints
-            getRandomIntervals(10000 , SAME_END), //same endpoints
-            getRandomIntervals(N - 30000 , MODE_RANDOM));
+            getRandomIntervals(10000 , SAME_BOTH, 100 , 0.00001), //all same interval
+            getRandomIntervals(10000 , SAME_START , 100 , 0.00001), //same startpoints
+            getRandomIntervals(10000 , SAME_END, 100 , 0.00001), //same endpoints
+            getRandomIntervals(N - 30000 , MODE_RANDOM, 100 , 0.00001));
         }
-
-        //tricky builder 2: same like #1, but each subcases are separated
+        //tricky builder 2: same like #1, but each chunk are disjoint
         for (int i=0;i<6;i++){
             CASE(N = rnd.nextInt(45000, 50000),
             clearCase(),
-            getRandomIntervals(10000, 0, 10000 , SAME_BOTH), //all same interval
-            getRandomIntervals(10000, 10000, 20000 , SAME_START), //same startpoints
-            getRandomIntervals(10000, 20000, 30000 , SAME_END), //same endpoints
-            getRandomIntervals(N - 30000 , 30000, 80000 , MODE_RANDOM));
+            getRandomIntervals(10000, 0, 10000 , SAME_BOTH, 100 , 0.00001), //all same interval
+            getRandomIntervals(10000, 10000, 20000 , SAME_START, 100 , 0.00001), //same startpoints
+            getRandomIntervals(10000, 20000, 30000 , SAME_END,100 , 0.00001), //same endpoints
+            getRandomIntervals(N - 30000 , 30000, 80000 , MODE_RANDOM, 100 , 0.00001));
         }
     }
 
+    // TC-TC khusus 
     void TestGroup4(){
         assignToSubtasks({-1});
 
-        CASE(allDisjoint());
-        CASE(allDisjoint());
+        CASE(allDisjoint(1));
+        CASE(allDisjoint(3));
+        CASE(allDisjoint(5));
+        CASE(allDisjoint(10));
+        CASE(allDisjoint(100));
 
         //tricky builder 3:
-        for (int i=0;i<6;i++){
+        for (int i=0;i<3;i++){
             CASE(trickyBuilder());
         }
         //edge case 1
         CASE(N = 50000, clearCase(), getRandomIntervals(N , MODE_RANDOM));
         //edge case 2
         CASE(N = 3, ST = {"00:00:00" , "00:00:00" , "23:59:58"} , ED = {"00:00:01" , "23:59:59" , "23:59:59"});
-
     }
 
 private:
-    void allDisjoint(){
+    void allDisjoint(int shift){
         clearCase();
         N = 50000;
         for (int i=0;i<N;i++){
-            getRandomIntervals(1,i,i+1, MODE_RANDOM);
+            getRandomIntervals(1,i,i + shift);
         }
     }
 
@@ -158,7 +168,7 @@ private:
         N = rnd.nextInt(450, 500) * 10;
         int st = 0;
         for (int i=1;i<N;i+=10){
-            getRandomIntervals(10 , st , st + 100, MODE_RANDOM);
+            getRandomIntervals(10 , st , st + 100);
             st += 100;
         }
     }
@@ -175,23 +185,22 @@ private:
         ED.clear();
     }
 
-    void getRandomIntervals(int amount, int minval, int maxval, int mode){
+    void getRandomIntervals(int amount, int minval, int maxval, int mode, int maxGap){
         int st;
         int ed;
 
         for (int i=0;i<amount;i++){
             //batch shuffle
-            if (i % 100 == 0) {
+            if (i % 10 == 0) {
                 st = rnd.nextInt(minval, maxval);
-                ed = rnd.nextInt(minval, maxval);
+                ed = rnd.nextInt(st, min(maxval, st + maxGap));
             }
             if (mode == SAME_END || mode == MODE_RANDOM) {
                 st = rnd.nextInt(minval, maxval);
             }
             if (mode == SAME_START || mode == MODE_RANDOM) {
-                ed = rnd.nextInt(minval, maxval);
+                ed = rnd.nextInt(st, min(maxval, st + maxGap));
             }
-            if (st > ed) swap(st,ed);
             if (st == ed && ed < maxval) ed++;
             if (st == ed && st > minval) st--;
 
@@ -199,10 +208,31 @@ private:
             ED.push_back(toClock(ed));
         }
     }
+    void getRandomIntervals(int amount, int minval, int maxval, int mode, int maxGap, float mutationRate){
+        int mutated = amount * mutationRate;
+        int normal = amount - mutated;
+        
+        getRandomIntervals(normal,minval, maxval, mode, maxGap);
+        getRandomIntervals(mutated,minval, maxval, mode , 100000);
+    }
+
+    void getRandomIntervals(int amount, int mode, int maxGap, float mutationRate){
+        int mutated = amount * mutationRate;
+        int normal = amount - mutated;
+
+        getRandomIntervals(normal, 0, 24*60*60 - 1, mode, maxGap);
+        getRandomIntervals(mutated, 0, 24*60*60 - 1, mode, 100000);
+
+    }
+
+    void getRandomIntervals(int amount, int minval, int maxval){
+         getRandomIntervals(amount,minval, maxval, MODE_RANDOM,100000);
+    }
 
     void getRandomIntervals(int amount, int mode) {
-        getRandomIntervals(amount,0, 24*60*60 - 1, mode);
+        getRandomIntervals(amount,0, 24*60*60 - 1, mode, 100000);
     }
+    
 };
 
 int main(int argc, char* argv[]) {
