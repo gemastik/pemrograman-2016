@@ -114,12 +114,21 @@ protected:
     
     void TestGroup3() {
         assignToSubtasks({-1});
-        for (int i=0;i<10;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100), randomNumbers(C, 1,100));
+        for (int i=0;i<5;i++) {
+            //yg jago cuman X orang. konflik.
+            CASE(N = rnd.nextInt(1,10), randomNumbers(G, 990,1000), randomNumbers(C, 990,1000), add_useless(50000 - N) , N = 50000, randomNames());
+            CASE(N = rnd.nextInt(1,10), randomNumbers(G, 1,100000), randomNumbers(C, 1,100000), add_useless(50000 - N) , N = 50000, randomNames());
+        
+        }
     }
     
     void TestGroup4(){
         assignToSubtasks({-1});
-        for (int i=0;i<10;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,1000), randomNumbers(C, 1,1000));
+        for (int i=0;i<5;i++) {
+            //yg jago cuman i orang. konflik.
+            CASE(N = rnd.nextInt(1,10), randomNumbers(G, 10,20), randomNumbers(C, 990,1000), add_useless(50000 - N) , N = 50000, randomNames());
+            CASE(N = rnd.nextInt(1,10), randomNumbers(G, 990,1000), randomNumbers(C, 10,20), add_useless(50000 - N) , N = 50000, randomNames());
+        }
     }
 
     private:
