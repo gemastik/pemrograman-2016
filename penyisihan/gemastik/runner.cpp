@@ -110,16 +110,16 @@ protected:
         CASE(N = 50000, randomNames() , randomNumbers(G, 1,1), randomNumbers(C, 1,1)); //extreme case
         for (int i=0;i<2;i++) CASE(N = rnd.nextInt(40000,50000), randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
         //yg jago cuman 20 orang. konflik.
-        for (int i=0;i<6;i++) CASE(N = 20, randomNumbers(G, 50,100), randomNumbers(C, 50,100), add_useless(50000 - N) , N = 50000, randomNames());
+        for (int i=0;i<6;i++) CASE(N = 100, randomNumbers(G, 50,100), randomNumbers(C, 50,100), add_useless(50000 - N) , N = 50000, randomNames());
     }
     
     void TestGroup3() {
         assignToSubtasks({-1});
         for (int i=0;i<5;i++) {
-            //yg jago cuman (1-10) orang. konflik.
-            CASE(N = rnd.nextInt(1,10), randomNumbers(G, 990,1000), randomNumbers(C, 990,1000), add_useless(50000 - N) , N = 50000, randomNames());
-            //yg jago cuman (20-30) orang. konflik.
-            CASE(N = rnd.nextInt(20,30), randomNumbers(G, 1,10), randomNumbers(C, 1,10), add_useless(50000 - N) , N = 50000, randomNames());
+            //yg jago cuman (1-30) orang. konflik.
+            CASE(N = rnd.nextInt(1,30), randomNumbers(G, 990,1000), randomNumbers(C, 990,1000), add_useless(50000 - N) , N = 50000, randomNames());
+            //yg jago cuman (1-30) orang. konflik.
+            CASE(N = rnd.nextInt(1,30), randomNumbers(G, 1,10), randomNumbers(C, 1,10), add_useless(50000 - N) , N = 50000, randomNames());
         
         }
     }
