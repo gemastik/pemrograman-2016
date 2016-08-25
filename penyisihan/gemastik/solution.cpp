@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int f_gemas[500001], f_cantik[500001], v[12];
+long long f_gemas[500001], f_cantik[500001], v[12];
 pair<int,int> gemas[50001], cantik[50001];
 char nama[50001][10];
-int best;
+long long best;
 int a,b,c,d,e,f;
 
 void coba(int i,int j,int k,int x,int y,int z){
@@ -18,7 +18,7 @@ void coba(int i,int j,int k,int x,int y,int z){
                 return;
         if (y == z)
                 return;
-        int res = (f_gemas[i] * f_gemas[j] * f_gemas[k]) + (f_cantik[x] * f_cantik[y] * f_cantik[z]);
+        long long res = (f_gemas[i] * f_gemas[j] * f_gemas[k]) + (f_cantik[x] * f_cantik[y] * f_cantik[z]);
         if (res > best){
                 best = res;
                 a = i; b = j; c = k;
