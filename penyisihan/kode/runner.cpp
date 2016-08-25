@@ -104,10 +104,10 @@ protected:
         assignToSubtasks({-1});
         for (int i=0;i<2;i++){
             CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 1 , 0.001));
-            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 5 , 0.0));
-            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 10 , 0.0));
-            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 100 , 0.0));
-            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 200 , 0.0));
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 5 , 0.001));
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 10 , 0.001));
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 100 , 0.001));
+            CASE(N = rnd.nextInt(45000, 50000), clearCase() , getRandomIntervals(N ,MODE_RANDOM, 200 , 0.001));
         }
 
     }
@@ -134,15 +134,16 @@ protected:
         }
     }
 
-    // TC-TC khusus 
+    // TC-TC khusus. Jawaban kebanyakan '2'
     void TestGroup4(){
         assignToSubtasks({-1});
 
-        CASE(allDisjoint(1));
-        CASE(allDisjoint(3));
-        CASE(allDisjoint(5));
-        CASE(allDisjoint(10));
-        CASE(allDisjoint(100));
+        CASE(N = 50000 , allDisjoint(1));
+        CASE(N = 50000 , allDisjoint(5));
+        CASE(N = 50000 , allDisjoint(10));
+        CASE(N = 49999 , allDisjoint(1), N++, getRandomIntervals(1 , 0, 50000));
+        CASE(N = 49999 , allDisjoint(5), N++, getRandomIntervals(1 , 0, 50000));
+
 
         //tricky builder 3:
         for (int i=0;i<3;i++){
@@ -157,9 +158,9 @@ protected:
 private:
     void allDisjoint(int shift){
         clearCase();
-        N = 50000;
         for (int i=0;i<N;i++){
-            getRandomIntervals(1,i,i + shift);
+            ST.push_back(toClock(i));
+            ED.push_back(toClock(i + shift));
         }
     }
 
