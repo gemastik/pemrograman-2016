@@ -107,17 +107,19 @@ protected:
     void TestGroup2(){
         assignToSubtasks({-1});
         CASE(N = 50000, randomNames() , randomNumbers(G, 100000,100000), randomNumbers(C, 100000,100000)); //extreme case
-        for (int i=0;i<3;i++) CASE(N = 50000, randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
-        //yg jago cuman 5 orang. konflik.
-        for (int i=0;i<6;i++) CASE(N = 5, randomNumbers(G, 50,100), randomNumbers(C, 50,100), add_useless(50000 - 5) , N = 50000, randomNames());
+        CASE(N = 50000, randomNames() , randomNumbers(G, 1,1), randomNumbers(C, 1,1)); //extreme case
+        for (int i=0;i<2;i++) CASE(N = rnd.nextInt(40000,50000), randomNames() , randomNumbers(G, 1,100000), randomNumbers(C, 1,100000));
+        //yg jago cuman 20 orang. konflik.
+        for (int i=0;i<6;i++) CASE(N = 20, randomNumbers(G, 50,100), randomNumbers(C, 50,100), add_useless(50000 - N) , N = 50000, randomNames());
     }
     
     void TestGroup3() {
         assignToSubtasks({-1});
         for (int i=0;i<5;i++) {
-            //yg jago cuman X orang. konflik.
+            //yg jago cuman (1-10) orang. konflik.
             CASE(N = rnd.nextInt(1,10), randomNumbers(G, 990,1000), randomNumbers(C, 990,1000), add_useless(50000 - N) , N = 50000, randomNames());
-            CASE(N = rnd.nextInt(1,10), randomNumbers(G, 1,100000), randomNumbers(C, 1,100000), add_useless(50000 - N) , N = 50000, randomNames());
+            //yg jago cuman (20-30) orang. konflik.
+            CASE(N = rnd.nextInt(20,30), randomNumbers(G, 1,10), randomNumbers(C, 1,10), add_useless(50000 - N) , N = 50000, randomNames());
         
         }
     }
@@ -126,12 +128,16 @@ protected:
         assignToSubtasks({-1});
         for (int i=0;i<5;i++) {
             //yg jago cuman i orang. konflik.
-            CASE(N = rnd.nextInt(1,10), randomNumbers(G, 10,20), randomNumbers(C, 990,1000), add_useless(50000 - N) , N = 50000, randomNames());
-            CASE(N = rnd.nextInt(1,10), randomNumbers(G, 990,1000), randomNumbers(C, 10,20), add_useless(50000 - N) , N = 50000, randomNames());
+            CASE(N = rnd.nextInt(1,30), randomNumbers(G, 10,20), randomNumbers(C, 990,1000), add_useless(50000 - N) , N = 50000, randomNames());
+            CASE(N = rnd.nextInt(1,30), randomNumbers(G, 990,1000), randomNumbers(C, 10,20), add_useless(50000 - N) , N = 50000, randomNames());
         }
     }
 
     private:
+        void add_weighted_data(int min_G,int max_G, int min_C, int max_C, int potential){
+            
+        }
+
         void add_useless(int n) {
             for (int i=0;i<n;i++){
                 add_data(1,1);
