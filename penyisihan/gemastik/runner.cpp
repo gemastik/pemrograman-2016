@@ -35,6 +35,7 @@ protected:
         CONS(eachElementLengthBetween(I,1,8));
         CONS(eachElementBetween(G,1,100000));
         CONS(eachElementBetween(C,1,100000));
+        CONS(allNamesUnique(I));
     }
 
     void MultipleTestCasesConstraints() {
@@ -48,6 +49,11 @@ private:
 
     bool eachElementLengthBetween(const vector<string>& S, int lo, int hi) {
         return all_of(S.begin(), S.end(),[lo, hi](string s) {return lo <= s.size() && s.size() <= hi;});
+    }
+
+    bool allNamesUnique(const vector<string>& I) {
+        set<string> s(I.begin(), I.end());
+        return s.size() == I.size();
     }
 };
 
@@ -112,7 +118,7 @@ protected:
         //yg jago cuman 20 orang. konflik.
         for (int i=0;i<6;i++) CASE(N = 100, randomNumbers(G, 50,100), randomNumbers(C, 50,100), add_useless(50000 - N) , N = 50000, randomNames());
     }
-    
+
     void TestGroup3() {
         assignToSubtasks({-1});
         for (int i=0;i<5;i++) {
@@ -123,7 +129,7 @@ protected:
         
         }
     }
-    
+
     void TestGroup4(){
         assignToSubtasks({-1});
         for (int i=0;i<5;i++) {
@@ -165,7 +171,7 @@ protected:
             add_data(99,101);
             add_data(1,98);
             add_data(1,97);
-            
+
             for (int i=0;i<100;i++) add_data(90,90);
             for (int i=0;i<100;i++) add_data(94,2);
             for (int i=0;i<100;i++) add_data(2,95);
