@@ -32,6 +32,7 @@ protected:
         CONS(0 < N && N <= 50000);
         CONS(eachElementValidClock(ST));
         CONS(eachElementValidClock(ED));
+        CONS(eachIntervalValid(ST,ED));
     }
 
     void MultipleTestCasesConstraints() {
@@ -197,7 +198,7 @@ private:
                 ed = rnd.nextInt(st, min(maxval, st + maxGap));
             }
             if (mode == SAME_END || mode == MODE_RANDOM) {
-                st = rnd.nextInt(minval, maxval);
+                st = rnd.nextInt(minval, min(ed,maxval));
             }
             if (mode == SAME_START || mode == MODE_RANDOM) {
                 ed = rnd.nextInt(st, min(maxval, st + maxGap));
