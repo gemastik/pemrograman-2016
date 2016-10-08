@@ -11,9 +11,9 @@ protected:
     string RES;
 
     void Config() {
-        setSlug("rotation");
-        setTimeLimit(3);
-        setMemoryLimit(256);
+        setSlug("astik");
+        setTimeLimit(2);
+        setMemoryLimit(64);
         setMultipleTestCasesCount(T);
     }
 
@@ -28,29 +28,38 @@ protected:
 
     void Constraints() {
         CONS(3 <= N && N <= 50000);
-        CONS(eachElementBetween(A,1,N));
+        CONS(permutation(A,N));
     }
 
     void MultipleTestCasesConstraints() {
-        CONS(T <= 40);
+        CONS(1 <= T && T <= 40);
     }
 
 private:
-    bool eachElementBetween(const vector<int>& A, int lo, int hi) {
-        return all_of(A.begin(), A.end(), [lo, hi](int a) {return lo <= a && a <= hi;});
+    bool permutation(const vector<int>& a, int n) {
+        set<int> s;
+        for (int x : a) {
+            if (x < 1 || x > n || s.count(x)) {
+                return false;
+            }
+            s.insert(x);
+        }
+        return true;
     }
 };
 
 class Generator : public BaseGenerator<Problem> {
 protected:
     void SampleTestCases() {
-        SAMPLE_CASE({"4", "3" , "4" , "2" , "1"});
-        SAMPLE_CASE({"3","3", "1", "2"});
+        SAMPLE_CASE({"5", "2" , "3" , "5" , "1" , "4"});
         SAMPLE_CASE({"5","1", "4" , "3" , "2" , "5"});
     }
 
     void TestCases() {
-       for (int i=0;i<40;i++) CASE(N = rnd.nextInt(40000,50000), doRandomPermutation());
+        CASE(N = 4, A = {3, 4, 2, 1});
+        for (int i=0;i<19;i++) CASE(N = rnd.nextInt(1,1000), doRandomPermutation());
+        for (int i=0;i<19;i++) CASE(N = rnd.nextInt(40000,50000), doRandomPermutation());
+        CASE(N = 50000, doRandomPermutation());
     }
 
     private:
