@@ -32,8 +32,11 @@ public class SolutionAshar {
 
             int res = allMembers.size();
             boolean outsider = false;
-            for (Set<String> member : members) {
-                if (member.equals(allMembers)) {
+            for (int i = 0; i < N; i++) {
+                Set<String> member = members.get(i);
+                String type = types.get(i);
+
+                if (type.equals("dibantu") && member.equals(allMembers)) {
                     outsider = true;
                     break;
                 }
