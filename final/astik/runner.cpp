@@ -19,7 +19,7 @@ protected:
 
     void InputFormat() {
         LINE(N);
-        LINES(A) % SIZE(N);
+        LINE(A % SIZE(N));
     }
 
     void OutputFormat() {
@@ -51,8 +51,14 @@ private:
 class Generator : public BaseGenerator<Problem> {
 protected:
     void SampleTestCases() {
-        SAMPLE_CASE({"5", "2" , "3" , "5" , "1" , "4"});
-        SAMPLE_CASE({"5","1", "4" , "3" , "2" , "5"});
+        SAMPLE_CASE({
+            "5",
+            "2 3 5 1 4"
+        });
+        SAMPLE_CASE({
+            "5",
+            "1 4 3 2 5"
+        });
     }
 
     void TestCases() {
