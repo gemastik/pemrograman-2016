@@ -77,11 +77,7 @@ double CalculateDouble(const vector<int>& multipliers, const vector<int>& divide
   return result;
 }
 
-#ifdef DOLPHINIGLE_ENV
 int main_a() {
-#else
-int main() {
-#endif
   int n;
   scanf("%d", &n);
   FORN(i, n) {
@@ -139,8 +135,17 @@ int main() {
   return 0;
 }
 
-
-
+int main() {
+  int t;
+  scanf("%d", &t);
+  FORN(i, t) {
+    memset(shirts, 0, sizeof shirts);
+    memset(people, 0, sizeof people);
+    memset(dp, 0, sizeof dp);
+    memset(probs, 0, sizeof probs);
+    main_a();
+  }
+}
 
 
 
