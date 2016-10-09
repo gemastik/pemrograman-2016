@@ -31,9 +31,9 @@ public class SolusiAji{
 				//System.out.println(grundy(x));
 			}
 			if (res == 0)
-				System.out.println("menang");
+				System.out.println("YA");
 			else
-				System.out.println("kalah");
+				System.out.println("TIDAK");
 		}
 	}
 }
