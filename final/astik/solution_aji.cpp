@@ -32,7 +32,7 @@ int main() {
 			inverse += get(isi[i]);
 			update(isi[i], 1);
 		}
-		if (inverse % 2)
+		if (inverse % 2 == 0)
 			printf("YA\n");
 		else
 			printf("TIDAK\n");
