@@ -22,7 +22,7 @@ protected:
 
     void InputFormat() {
         LINE(N, M);
-        LINES(X, K) % SIZE(N);
+        LINES(X, K) % SIZE(M);
     }
 
     void OutputFormat() {
@@ -54,10 +54,10 @@ protected:
             "4 3",
             "1 2",
             "5 1",
-            "4 2",
-            "2 2"
+            "4 2"
         });
         SAMPLE_CASE({
+            "2 2",
             "1 100",
             "2 100"
         });
@@ -100,7 +100,7 @@ protected:
         CASE(N = 50000, M = 50000, randomKillerCase());
         CASE(N = 50000, M = 50000, randomKillerCase());
         CASE(N = 50000, M = 50000, randomKillerCase());
-        CASE(N = 50000, M = 50000, randomKillerCase());
+        CASE(N = 50000, M = 50000, maxCase());
     }
 
 private:
@@ -142,10 +142,19 @@ private:
             if (i < M/4) {
                 k = rnd.nextInt(N) + 1;
             } else {
-                k = rnd.nextInt(10);
+                k = rnd.nextInt(10) + 1;
             }
             X.push_back(x);
             K.push_back(k);
+        }
+    }
+
+    void maxCase() {
+        X.clear();
+        K.clear();
+        for (int i = 0; i < M; i++) {
+            X.push_back(N/2);
+            K.push_back(50000);
         }
     }
 };
