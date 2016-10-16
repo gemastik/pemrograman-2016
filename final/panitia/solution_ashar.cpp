@@ -84,6 +84,6 @@ int main() {
 			res += dp[N+1][N][k] * k / (2*N - k);
 		}
 
-		printf("%.3lf\n", res);
+		printf("%.5lf\n", res);
 	}
 }

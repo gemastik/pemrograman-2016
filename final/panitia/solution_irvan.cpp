@@ -131,7 +131,7 @@ int main_a() {
     // cout << i << ":" << dp[n+2][n][i] << endl;
     pong += dp[n+2][n][i] * (db)i / (db)(2*n-i);
   }
-  printf("%.3lf\n", pong);
+  printf("%.5lf\n", pong);
   return 0;
 }
 
