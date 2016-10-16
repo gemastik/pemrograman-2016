@@ -14,13 +14,15 @@ from tools import scaler, custom_random
 
 def Gen(n_range):
   random.seed(754321)
-  printer = wrapper.Printer(icpc.KattisFormatter('../../../../out/sg2015/uniform'))
+  printer = wrapper.Printer(icpc.KattisFormatter('tc'))
   m = 10**7
 
   def Print(colors, shirts, tc_name):
-    assert(len(shirts) == len(colors)+1)
+    n = len(colors)
+    assert 1 <= n <= 50
+    assert(len(shirts) == n+1)
     for c in colors:
-      assert 1 <= c <= len(colors)
+      assert 1 <= c <= n+1
     for i in shirts:
       assert 0 <= i <= m
     assert sum(shirts) >= len(colors)
@@ -31,11 +33,17 @@ def Gen(n_range):
     printer.Print(' '.join(map(str, shirts)))
     printer.Close()
 
+
+  # Sample
+
+  Print([1, 2], [1, 1, 1], 'sample')
+  Print([1, 2], [0, 0, 3], 'sample')
+
   # Random
   for _ in range(10):
     n = random.randint(*n_range)
     max_m = random.randint(1, m)
-    Print([random.randint(1, n) for _ in range(n)],
+    Print([random.randint(1, n+1) for _ in range(n)],
           [random.randint(0, max_m) for _ in range(n+1)],
           'random')
 
