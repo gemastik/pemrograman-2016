@@ -46,7 +46,7 @@ typedef long long ll;
 typedef double db;
 typedef vector<int> vint;
 
-const int kMaxN = 305;
+const int kMaxN = 55;
 
 int shirts[kMaxN];
 int people[kMaxN];
