@@ -9,7 +9,6 @@ struct Point {
 	bool operator<(Point o) const {return x<o.x;}
 	Point operator+(Point o) {return Point(x+o.x, y+o.y);}
 	Point operator-(Point o) {return Point(x-o.x, y-o.y);}
-	Point operator*(double k) {return Point(x*k, y*k);}
 };
 
 int T;
@@ -17,9 +16,8 @@ int N, Q;
 Point data[100005];
 Point temp[100005];
 
-typedef vector<Point> Polygon;
-double cp(Point a, Point b) {return a.x*b.y - a.y*b.x;}
-double cp(Point o, Point a, Point b) {return cp(a-o, b-o);}
+ll cp(Point a, Point b) {return a.x*b.y - a.y*b.x;}
+ll cp(Point o, Point a, Point b) {return cp(a-o, b-o);}
 
 ll solve(int a, int b) {
 	int k = 0;
