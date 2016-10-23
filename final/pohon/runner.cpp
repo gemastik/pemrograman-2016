@@ -31,6 +31,7 @@ protected:
         CONS(0 < N && N <= 50000);
         CONS(eachElementBetween(A,1,N));
         CONS(eachElementBetween(B,1,N));
+        CONS(isTree(A,B));
     }
 
     void MultipleTestCasesConstraints() {
@@ -41,6 +42,35 @@ protected:
 private:
     bool eachElementBetween(const vector<int>& A, int lo, int hi) {
         return all_of(A.begin(), A.end(), [lo, hi](int a) {return lo <= a && a <= hi;});
+    }
+
+    bool dfs(int pos, int par, int* flag, vector<int>* path){
+        if (flag[pos] == true)
+            return false;
+        flag[pos] = true;
+
+        int degree = path[pos].size();
+        for (int i=0;i<degree;i++){
+            int u = path[pos][i];
+            if (u == par)
+                continue;
+            if (dfs(u,pos,flag,path) == false)
+                return false;
+        }
+        return true;
+    }
+
+    bool isTree(const vector<int>& A, const vector<int>& B){
+        int n = A.size();
+        vector<int> path[50001];
+        for (int i=0;i<n;i++){
+            path[A[i] - 1].push_back(B[i] - 1);
+            path[B[i] - 1].push_back(A[i] - 1);
+        }
+        int* flag = new int[n + 1]();
+
+        return dfs(0,-1,flag, path);
+        delete[] flag;
     }
 };
 
@@ -76,15 +106,27 @@ protected:
 
     void TestGroup2() {
         assignToSubtasks({-1});
-        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(1)); //chain
-        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(2)); //binary
-        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(3)); //trinary
-        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(1000)); //lebar
-        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(999999)); //star
+        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(1,1)); //chain
+        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(2,2)); //binary
+        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(3,3)); //trinary
+        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(1000,1000)); //lebar
+        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(100,1000)); //lebar ranomized
+        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(1,5)); //deep ranomized
+        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(1,2)); //bintree unbalanced
+        CASE(N = rnd.nextInt(45000, 50000), n_ary_tree(999999,999999)); //star
+    }
+
+    void TestGroup3() {
+        assignToSubtasks({-1});
+
         CASE(N = 1, A = {}, B = {});
         CASE(N = 2, A = {1}, B = {2});
         CASE(N = 3, A = {1,3}, B = {2,1});
         CASE(N = 3, A = {1,2}, B = {2,3});
+        CASE(N = 50000, n_ary_tree(1,1000));
+        CASE(N = 500, n_ary_tree(1,10));
+        CASE(N = 50000, n_ary_tree(2,3));
+        CASE(N = 50000, n_ary_tree(1,10));
     }
 
 private:
@@ -100,11 +142,13 @@ private:
         }
     }
 
-    void n_ary_tree(int n){
+    void n_ary_tree(int min_deg, int max_deg){
         A.clear();
         B.clear();
         int now = 1;
         int ct = 0;
+
+        int n = rnd.nextInt(min_deg, max_deg);
         for (int i=2;i<=N;i++){
             ct++;
             A.push_back(now);
@@ -112,6 +156,7 @@ private:
             if (ct == n){
                 ct = 0;
                 now++;
+                n = rnd.nextInt(min_deg, max_deg);
             }
         }
     }
