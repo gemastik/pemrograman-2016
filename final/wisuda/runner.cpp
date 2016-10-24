@@ -91,8 +91,9 @@ protected:
             "selfie 1 candra"
         });
         SAMPLE_CASE({
-            "2",
+            "3",
             "dibantu 3 ani budi candra",
+            "dibantu 1 budi",
             "selfie 3 ani candra budi"
         });
     }
