@@ -12,8 +12,8 @@ protected:
     int RES;
     void Config() {
         setSlug("pohon");
-        setTimeLimit(10000);
-        setMemoryLimit(256);
+        setTimeLimit(2);
+        setMemoryLimit(64);
         setMultipleTestCasesCount(T);
     }
 
@@ -82,7 +82,7 @@ protected:
                     "1 3",
                     "4 1"});
         SAMPLE_CASE({"5",
-                    "1 2", 
+                    "1 2",
                     "2 3",
                     "3 4",
                     "4 5"});
@@ -135,7 +135,7 @@ private:
         B.clear();
         for (int i=2;i<=N;i++){
             int x = rnd.nextInt(1,N);
-            while (x == i) 
+            while (x == i)
                 x = rnd.nextInt(1,N);
             A.push_back(x);
             B.push_back(i);
