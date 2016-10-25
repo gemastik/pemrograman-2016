@@ -12,8 +12,8 @@ protected:
     long long RES;
     void Config() {
         setSlug("gapura");
-        setTimeLimit(10000);
-        setMemoryLimit(256);
+        setTimeLimit(2);
+        setMemoryLimit(64);
         setMultipleTestCasesCount(T);
     }
 
@@ -68,6 +68,34 @@ protected:
         CASE(N = 24, L = {4,8,16,32,64,128,256,512,1024,2048,4096,8192,4,8,16,32,64,128,256,512,1024,2048,4096,8192});
     }
 
+    void TestGroup2() {
+        assignToSubtasks({-1});
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(99999,100000));
+        CASE(N = 25, randomLength(1,10));
+        CASE(N = 25, randomLength(1,10));
+    }
+
+    void TestGroup3() {
+        assignToSubtasks({-1});
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(100000,100000));
+        CASE(N = 25, randomLength(99999,100000));
+        CASE(N = 25, randomLength(1,10));
+        CASE(N = 25, randomLength(1,10));
+    }
+
 private:
     void randomLength(int lo, int hi){
         L.clear();
@@ -75,7 +103,7 @@ private:
             L.push_back(rnd.nextInt(lo,hi));
     }
 
-    
+
 };
 
 int main(int argc, char* argv[]) {
