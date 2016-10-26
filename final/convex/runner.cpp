@@ -4,6 +4,11 @@ using namespace tcframe;
 #include <bits/stdc++.h>
 using namespace std;
 
+const int MIN_X = 1;
+const int MAX_X = 2 * 1000 * 1000 * 1000;
+const int MIN_Y = 1;
+const int MAX_Y = 2 * 1000 * 1000 * 1000;
+
 typedef long long ll;
 
 class Problem : public BaseProblem {
@@ -11,7 +16,7 @@ protected:
     int T;
     int N, Q;
     vector<int> X, Y;
-    vector<int> X1, X2;
+    vector<int> X1, K;
     vector<double> RES;
 
     void Config() {
@@ -25,7 +30,7 @@ protected:
         LINE(N);
         LINES(X, Y) % SIZE(N);
         LINE(Q);
-        LINES(X1, X2) % SIZE(Q);
+        LINES(X1, K) % SIZE(Q);
     }
 
     void OutputFormat() {
@@ -33,15 +38,13 @@ protected:
     }
 
     void Constraints() {
-        CONS(1 <= N && N <= 100000);
-        CONS(1 <= Q && Q <= 100000);
-        CONS(eachElementBetween(X, 1, 1000000000));
-        CONS(eachElementBetween(Y, 1, 1000000000));
-        CONS(eachElementBetween(X1, 0, 1000000000));
-        CONS(eachElementBetween(X2, 0, 1000000000));
-        CONS(X1NotGreaterThanX2());
+        CONS(1 <= N && N <= 100*1000);
+        CONS(1 <= Q && Q <= 100*1000);
+        CONS(eachElementBetween(X, MIN_X, MAX_X));
+        CONS(eachElementBetween(Y, MIN_Y, MAX_Y));
+        CONS(eachElementBetween(X1, MIN_X, MAX_X));
+        CONS(eachElementBetween(K, 1, N));
         CONS(isUnique(X));
-        CONS(isUnique(Y));
     }
 
     void MultipleTestCasesConstraints() {
@@ -51,15 +54,6 @@ protected:
 private:
     bool eachElementBetween(const vector<int>& A, int lo, int hi) {
         return all_of(A.begin(), A.end(), [lo, hi](int a) {return lo <= a && a <= hi;});
-    }
-
-    bool X1NotGreaterThanX2() {
-        for (int i = 0; i < Q; i++) {
-            if (X1[i] > X2[i]) {
-                return false;
-            }
-        }
-        return true;
     }
 
     bool isUnique(const vector<int>& v) {
@@ -73,29 +67,29 @@ protected:
     void SampleTestCases() {
         SAMPLE_CASE({
             "9",
-            "1 8",
+            "1 2",
             "3 4",
             "5 3",
             "2 9",
             "4 7",
             "6 5",
-            "9 2",
+            "9 8",
             "10 1",
             "12 6",
             "6",
-            "0 2",
-            "3 7",
-            "5 14",
-            "5 10",
-            "11 13",
-            "7 8"
+            "1 2",
+            "3 3",
+            "5 4",
+            "5 5",
+            "10 3",
+            "11 5"
         });
     }
 
     void TestGroup1() {
         assignToSubtasks({-1});
-        CASE(N = 3, Q = 1, X = {1, 500000000, 1000000000}, Y = {1, 500000000, 2}, X1 = {1}, X2 = {1});
-        CASE(N = 1000, Q = 1000, randomCase());
+        CASE(N = 3, Q = 1, X = {1, 500000000, 1000000000}, Y = {1, 500000000, 2}, X1 = {1}, K = {1});
+        CASE(N = 1000, Q = 50, randomCase());
         CASE(N = 1000, Q = 1000, randomCase());
         CASE(N = 5000, Q = 100000, randomCase());
         CASE(N = 100000, Q = 2000, randomCase());
@@ -119,6 +113,14 @@ protected:
         CASE(N = 100000, Q = 100000, randomKillerCase());
     }
 
+    void TestGroup4() {
+        assignToSubtasks({-1});
+        CASE(N = 50000, Q = 50000, paraboleCase());
+        CASE(N = 50000, Q = 50000, antiParaboleCase());
+        CASE(N = 50000, Q = 50000, multiParaboleCase());
+        CASE(N = 50000, Q = 50000, multiAntiParaboleCase());
+    }
+
 private:
     vector<int> genCoord() {
         set<int> seen;
@@ -132,6 +134,21 @@ private:
             seen.insert(x);
         }
         return coord;
+    }
+
+    vector<int> getParaboloidValues(int min, int max) {
+        vector<int> values;
+
+        int cur = min;
+        int delta = 1;
+        while (cur <= max) {
+          values.push_back(cur);
+
+          cur += delta;
+          delta++;
+        }
+
+        return values;
     }
 
     int genPoint(int x) {
@@ -151,19 +168,16 @@ private:
         X = genCoord();
         Y = genCoord();
         X1.clear();
-        X2.clear();
+        K.clear();
 
         vector<int> S = X;
         sort(S.begin(), S.end());
 
         for (int q = 0; q < Q; q++) {
             int x1 = genPoint(S[rnd.nextInt(N)]);
-            int x2 = genPoint(S[rnd.nextInt(N)]);
-            if (x1 > x2) {
-                swap(x1, x2);
-            }
+            int k = rnd.nextInt(1, N);
             X1.push_back(x1);
-            X2.push_back(x2);
+            K.push_back(k);
         }
     }
 
@@ -172,7 +186,7 @@ private:
         X = genCoord();
         Y = genCoord();
         X1.clear();
-        X2.clear();
+        K.clear();
 
         vector<int> S = X;
         sort(S.begin(), S.end());
@@ -184,21 +198,110 @@ private:
             } else {
                 a = S[rnd.nextInt(N)];
             }
-            int b;
-            if (rnd.nextInt(100) < 90) {
-                b = S[N - rnd.nextInt(10)];
-            } else {
-                b = S[rnd.nextInt(N)];
-            }
 
             int x1 = genPoint(a);
-            int x2 = genPoint(b);
-            if (x1 > x2) {
-                swap(x1, x2);
-            }
+            int k = rnd.nextInt(1, N);
             X1.push_back(x1);
-            X2.push_back(x2);
+            K.push_back(k);
         }
+    }
+
+    // U n U n
+    void paraboleCase() {
+        X = genCoord();
+        Y.clear();
+        X1.clear();
+        K.clear();
+
+        sort(X.begin(), X.end());
+
+        vector<int> paraboloidValue = getParaboloidValues(MIN_X, MAX_Y);
+        reverse(paraboloidValue.begin(), paraboloidValue.end());
+
+        int p = 0;
+        int direction = 1;
+        for (int i = 0; i < N; i++) {
+          Y.push_back(paraboloidValue[p]);
+
+          if ((p + direction < 0) || (p + direction >= paraboloidValue.size())) {
+            direction = -direction;
+          }
+          p += direction;
+        }
+
+        for (int q = 0; q < Q; q++) {
+            int x1 = genPoint(X[rnd.nextInt(N)]);
+            int k = rnd.nextInt(1, N);
+            X1.push_back(x1);
+            K.push_back(k);
+        }
+    }
+
+    // n U n U
+    void antiParaboleCase() {
+      paraboleCase();
+
+      for (int i = 0; i < N; i++) {
+        Y[i] = MAX_Y - (Y[i] - MIN_Y);
+      }
+    }
+
+    // like a bunch of bananas
+    void multiParaboleCase() {
+        // number of layer for paraboles
+        int layer = 5;
+        int layerGap = (MAX_Y - MIN_Y) / layer;
+
+        X = genCoord();
+        Y.clear();
+        X1.clear();
+        K.clear();
+
+        sort(X.begin(), X.end());
+
+        vector<int> paraboloidValue = getParaboloidValues(MIN_X, MAX_Y);
+        reverse(paraboloidValue.begin(), paraboloidValue.end());
+
+        int p = 0;
+        int i = 0;
+        int direction = 1;
+        while (1) {
+          long long y = paraboloidValue[p];
+
+          for (int l = 0; l < layer; l++) {
+            y += l * layerGap;
+
+            // wrap around
+            Y.push_back(MIN_Y + y % (MAX_Y - MIN_Y));
+            if (Y.size() == N) {
+              break;
+            }
+          }
+
+          if (Y.size() == N) {
+            break;
+          }
+
+          if ((p + direction < 0) || (p + direction >= paraboloidValue.size())) {
+            direction = -direction;
+          }
+          p += direction;
+        }
+
+        for (int q = 0; q < Q; q++) {
+            int x1 = genPoint(X[rnd.nextInt(N)]);
+            int k = rnd.nextInt(1, N);
+            X1.push_back(x1);
+            K.push_back(k);
+        }
+    }
+
+    void multiAntiParaboleCase() {
+      multiParaboleCase();
+
+      for (int i = 0; i < N; i++) {
+        Y[i] = MAX_Y - (Y[i] - MIN_Y);
+      }
     }
 };
 
