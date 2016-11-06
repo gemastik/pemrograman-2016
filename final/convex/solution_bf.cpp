@@ -54,12 +54,16 @@ int main() {
 		for (int i = 0; i < Q; i++) {
 			int x1, k;
 			scanf("%d %d", &x1, &k);
-			int a = 0;
+			int a = -1;
 			for (int j = 0; j < N; j++) {
 				if (data[j].x >= x1) {
 					a = j;
 					break;
 				}
+			}
+			if (a == -1) {
+				printf("0.0\n");
+				continue;
 			}
 			ll res = solve(a, k);
 			printf("%lld.%d\n", res/2, res % 2 ? 5 : 0);

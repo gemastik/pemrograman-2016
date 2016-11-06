@@ -166,6 +166,10 @@ void solve() {
   FOR(q, 0, Q-1) {
     int x1, k;
     scanf("%d %d", &x1, &k);
+    if (x1 > points[N-1].x) {
+      printf("0.0\n");
+      continue;
+    }
     LL result = query(x1, k);
     printf("%lld.%d\n", result / 2, result % 2 ? 5 : 0);
     // printf("\n");
